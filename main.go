@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/rakhmadbudiono/duck-pic-service/config"
 	"github.com/rakhmadbudiono/duck-pic-service/handler"
@@ -17,8 +18,10 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	e.GET("/", handler.Hello)
+	handler.RegisterEndpoints(e)
 
 	addr := fmt.Sprintf("%s:%s", cfg.Server.Host, cfg.Server.Port)
-	e.Logger.Fatal(e.Start(addr))
+	if err := e.Start(addr); err != nil {
+		log.Fatalf("Couldn't start REST server: %s", err)
+	}
 }
