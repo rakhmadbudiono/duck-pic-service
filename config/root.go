@@ -6,16 +6,18 @@ import (
 	"github.com/kelseyhightower/envconfig"
 )
 
-var Root Config
+var root Config
 
+// Config wraps all config types
 type Config struct {
-	Server ServerConfig
+	Server serverConfig
 }
 
+// New load and return config object
 func New() *Config {
-	if err := envconfig.Process("SERVER", &Root.Server); err != nil {
+	if err := envconfig.Process("SERVER", &root.Server); err != nil {
 		log.Fatal(err.Error())
 	}
 
-	return &Root
+	return &root
 }
