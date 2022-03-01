@@ -1,2 +1,10 @@
 *.env
 *.out
+
+**/.terraform/*
+
+*.tfstate
+*.tfstate.*
+*.tfvars
+.terraform.lock.hcl
+terraform.tfbackend
