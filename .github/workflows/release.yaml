@@ -27,7 +27,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: rakhmadbudiono/duck-pic-service:latest,rakhmadbudiono/duck-pic-service:$RELEASE_VERSION
+          tags: rakhmadbudiono/duck-pic-service:latest,rakhmadbudiono/duck-pic-service:${{ env.RELEASE_VERSION }}
+          build-args: RELEASE_VERSION=${{ env.RELEASE_VERSION }}
 
   terraform:
     name: Terraform
