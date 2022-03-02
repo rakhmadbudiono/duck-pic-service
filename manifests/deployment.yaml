@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: duck-pic-app
+spec:
+  selector:
+    matchLabels:
+      app: duck-pic-app
+  template:
+    metadata:
+      labels:
+        app: duck-pic-app
+    spec:
+      containers:
+        - name: duck-pic-app
+          image: rakhmadbudiono/duck-pic-service:latest
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 8000

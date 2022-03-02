@@ -1,0 +1,10 @@
+digitalocean_token   = ""
+bucket_name          = ""
+tfstate_path         = ""
+access_id            = ""
+secret_key           = ""
+cluster_name         = ""
+cluster_version      = ""
+node_pool_name       = ""
+node_pool_size       = ""
+node_pool_node_count = 0
