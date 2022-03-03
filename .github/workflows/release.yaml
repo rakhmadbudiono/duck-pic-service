@@ -52,3 +52,28 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve -var "digitalocean_token=${{ secrets.DO_TOKEN }}" -var "cluster_name=${{ secrets.KUBE_CLUSTER }}" -var "cluster_version=${{ secrets.KUBE_CLUSTER_VERSION }}" -var "node_pool_name=${{ secrets.KUBE_CLUSTER_NODE_POOL_NAME }}" -var "node_pool_size=${{ secrets.KUBE_CLUSTER_NODE_POOL_SIZE }}" -var "node_pool_node_count=${{ secrets.KUBE_CLUSTER_NODE_POOL_NODE_COUNT }}"
+
+  kubernetes:
+    name: Kubernetes
+    runs-on: ubuntu-latest
+    needs: terraform
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v2
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_TOKEN }}
+
+      - name: Save DigitalOcean kubeconfig with short-lived credentials
+        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.KUBE_CLUSTER }}
+
+      - name: Apply deployment
+        run: kubectl apply -f $GITHUB_WORKSPACE/manifests/deployment.yaml
+
+      - name: Apply service
+        run: kubectl apply -f $GITHUB_WORKSPACE/manifests/service.yaml
+
+      - name: Redeploying
+        run: kubectl rollout restart deployment/duck-pic-app

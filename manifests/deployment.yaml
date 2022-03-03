@@ -6,6 +6,8 @@ spec:
   selector:
     matchLabels:
       app: duck-pic-app
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -13,6 +15,7 @@ spec:
     spec:
       containers:
         - name: duck-pic-app
+          imagePullPolicy: Always
           image: rakhmadbudiono/duck-pic-service:latest
           resources:
             limits:
