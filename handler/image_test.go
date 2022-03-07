@@ -15,11 +15,11 @@ func TestFirstImage(t *testing.T) {
 	// expected result
 	expectedStatusCode := http.StatusOK
 
-	e.GET("/first", func(c echo.Context) error {
+	e.GET("/image/first", func(c echo.Context) error {
 		return c.File("../static/image.jpg")
 	})
 
-	req, _ := http.NewRequest("GET", "/first", nil)
+	req, _ := http.NewRequest("GET", "/image/first", nil)
 	rec := httptest.NewRecorder()
 	e.ServeHTTP(rec, req)
 

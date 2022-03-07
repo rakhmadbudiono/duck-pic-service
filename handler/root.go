@@ -14,6 +14,7 @@ func init() {
 // RegisterEndpoints register endpoint and its handler
 func RegisterEndpoints(e *echo.Echo) {
 	e.GET("/", Hello)
-	e.GET("/first", FirstImage)
+	e.GET("/image/static", FirstImage)
+	e.GET("/image/random", RandomImage)
 	e.GET("/image/:id", GetImage)
 }
