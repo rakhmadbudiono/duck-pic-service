@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/rakhmadbudiono/duck-pic-service/handler"
+
 	"github.com/stretchr/testify/assert"
 )
 
