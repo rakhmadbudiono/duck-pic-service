@@ -23,3 +23,6 @@ spec:
               cpu: "250m"
           ports:
             - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: duck-pic-secret

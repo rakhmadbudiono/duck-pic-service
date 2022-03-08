@@ -57,6 +57,13 @@ jobs:
     name: Kubernetes
     runs-on: ubuntu-latest
     needs: terraform
+    env:
+      DO_SPACE_KEY: ${{ secrets.DO_SPACE_KEY }}
+      DO_SPACE_SECRET: ${{ secrets.DO_SPACE_SECRET }}
+      DO_SPACE_HOST: ${{ secrets.DO_SPACE_HOST }}
+      DO_SPACE_BUCKET: ${{ secrets.DO_SPACE_BUCKET }}
+      DUCK_SPACE_FOLDER: ${{ secrets.DUCK_SPACE_FOLDER }}
+      DUCK_COUNT_DUCK: ${{ secrets.DUCK_COUNT_DUCK }}
     steps:
       - name: Checkout main
         uses: actions/checkout@v2
@@ -68,6 +75,9 @@ jobs:
 
       - name: Save DigitalOcean kubeconfig with short-lived credentials
         run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.KUBE_CLUSTER }}
+
+      - name: Apply secret
+        run: cat $GITHUB_WORKSPACE/manifests/secret.yaml | envsubst | kubectl apply -f-
 
       - name: Apply deployment
         run: kubectl apply -f $GITHUB_WORKSPACE/manifests/deployment.yaml
